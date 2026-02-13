@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffeef2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .gif-container img {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #888;
+            color: white;
+            position: absolute;
+        }
+
+        #success-message {
+            display: none;
+            color: #ff4d6d;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-content">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpndW16cnR5bmMxZ2t5ZzRreXpndm54ZzRreXpndm54ZzRreXAmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0Pmc/c76IJbxB9r2dgTC0JM/giphy.gif" alt="Cute bear">
+        </div>
+        <h1>Will you be my Valentine? ❤️</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <div id="success-message">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z0dzRreXpndm54ZzRreXpndm54ZzRreXpndm54ZzRreXAmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0Pmc/KztT2c4u8mYYUiMKdJ/giphy.gif" alt="Happy bear">
+        <h1>Yay! See you on the 14th! 😘</h1>
+    </div>
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            
+            // Calculate random positions within the screen bounds
+            // Subtracting button width/height to keep it on screen
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function celebrate() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
