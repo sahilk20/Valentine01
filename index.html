@@ -2,104 +2,109 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Be My Valentine?</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
             background-color: #ffeef2;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Keeps the button inside the screen */
+        }
+
+        .container {
             text-align: center;
-            overflow: hidden;
+            width: 90%;
+        }
+
+        img {
+            width: 180px;
+            height: auto;
+            border-radius: 20px;
+            margin-bottom: 20px;
         }
 
         h1 {
             color: #ff4d6d;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
         }
 
-        .gif-container img {
-            width: 200px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-
-        .buttons {
+        .btn-group {
             display: flex;
-            gap: 20px;
-            position: relative;
-            width: 100%;
-            justify-content: center;
+            flex-direction: column; /* Stacked for mobile safety */
             align-items: center;
+            gap: 20px;
+            height: 150px; /* Space for the button to jump */
+            position: relative;
         }
 
         button {
-            padding: 15px 30px;
+            padding: 15px 40px;
             font-size: 1.2rem;
+            font-weight: bold;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
+            z-index: 10;
         }
 
         #noBtn {
-            background-color: #888;
+            background-color: #adb5bd;
             color: white;
             position: absolute;
+            top: 80px; /* Starts below the Yes button */
+            transition: 0.1s;
         }
 
-        #success-message {
+        #success {
             display: none;
-            color: #ff4d6d;
         }
     </style>
 </head>
 <body>
 
-    <div id="main-content">
-        <div class="gif-container">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpndW16cnR5bmMxZ2t5ZzRreXpndm54ZzRreXpndm54ZzRreXAmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0Pmc/c76IJbxB9r2dgTC0JM/giphy.gif" alt="Cute bear">
-        </div>
+    <div id="ask" class="container">
+        <img src="https://media1.tenor.com/m/X_mG7_vD6mEAAAAC/cute-bear.gif" alt="Asking Bear">
         <h1>Will you be my Valentine? ❤️</h1>
-        
-        <div class="buttons">
-            <button id="yesBtn" onclick="celebrate()">Yes!</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        <div class="btn-group">
+            <button id="yesBtn" onclick="showLove()">YES</button>
+            <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
         </div>
     </div>
 
-    <div id="success-message">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z0dzRreXpndm54ZzRreXpndm54ZzRreXpndm54ZzRreXAmZXA9djFfaW50ZXJuYWxfZ2lmX2J5X2lkJmN0Pmc/KztT2c4u8mYYUiMKdJ/giphy.gif" alt="Happy bear">
-        <h1>Yay! See you on the 14th! 😘</h1>
+    <div id="success" class="container">
+        <img src="https://media1.tenor.com/m/90fI98L8_68AAAAC/milk-and-mocha-bear-couple.gif" alt="Happy Bears">
+        <h1>Yay! I knew you'd say yes! 🥰</h1>
     </div>
 
     <script>
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            // Keeps button within the visible mobile screen
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
             
-            // Calculate random positions within the screen bounds
-            // Subtracting button width/height to keep it on screen
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
-        function celebrate() {
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('success-message').style.display = 'block';
+        function showLove() {
+            document.getElementById('ask').style.display = 'none';
+            document.getElementById('success').style.display = 'block';
         }
     </script>
 </body>
