@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Be My Valentine?</title>
+    <title>For You ❤️</title>
     <style>
         body {
             margin: 0;
@@ -13,35 +13,50 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #ffeef2;
+            background: linear-gradient(180deg, #ffafbd 0%, #ffc3a0 100%);
             font-family: 'Arial', sans-serif;
-            overflow: hidden; /* Keeps the button inside the screen */
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Floating Hearts Background */
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 20px;
+            animation: float 5s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         .container {
-            text-align: center;
-            width: 90%;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+            width: 80%;
         }
 
-        img {
-            width: 180px;
-            height: auto;
-            border-radius: 20px;
-            margin-bottom: 20px;
+        .emoji-display {
+            font-size: 80px;
+            margin-bottom: 10px;
         }
 
         h1 {
-            color: #ff4d6d;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
             font-size: 1.8rem;
-            margin-bottom: 30px;
         }
 
         .btn-group {
-            display: flex;
-            flex-direction: column; /* Stacked for mobile safety */
-            align-items: center;
-            gap: 20px;
-            height: 150px; /* Space for the button to jump */
+            margin-top: 30px;
+            height: 120px;
             position: relative;
         }
 
@@ -52,51 +67,63 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: 0.2s;
         }
 
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            z-index: 10;
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { 
+            background-color: #ffffff; color: #ff4d6d; 
+            position: absolute; left: 50%; transform: translateX(-50%);
+            top: 70px;
         }
 
-        #noBtn {
-            background-color: #adb5bd;
-            color: white;
-            position: absolute;
-            top: 80px; /* Starts below the Yes button */
-            transition: 0.1s;
-        }
-
-        #success {
-            display: none;
-        }
+        #success { display: none; }
     </style>
 </head>
 <body>
 
+    <audio id="popSound">
+        <source src="https://www.myinstants.com/media/sounds/pop_ebEAnAn.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="ask" class="container">
-        <img src="https://media1.tenor.com/m/X_mG7_vD6mEAAAAC/cute-bear.gif" alt="Asking Bear">
-        <h1>Will you be my Valentine? ❤️</h1>
+        <div class="emoji-display">🥺</div>
+        <h1>Will you be my Valentine?</h1>
         <div class="btn-group">
-            <button id="yesBtn" onclick="showLove()">YES</button>
+            <button id="yesBtn" onclick="playPop(); showLove()">YES!</button>
             <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
         </div>
     </div>
 
     <div id="success" class="container">
-        <img src="https://media1.tenor.com/m/90fI98L8_68AAAAC/milk-and-mocha-bear-couple.gif" alt="Happy Bears">
-        <h1>Yay! I knew you'd say yes! 🥰</h1>
+        <div class="emoji-display">💖</div>
+        <h1>Yay! I'm the luckiest! <br> See you soon! 😘</h1>
     </div>
 
     <script>
+        // Create falling hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 300);
+
+        function playPop() {
+            const sound = document.getElementById("popSound");
+            sound.play();
+        }
+
         function moveNo() {
+            playPop(); // Play sound when she tries to click No
             const btn = document.getElementById('noBtn');
-            // Keeps button within the visible mobile screen
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
             const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            
             btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
